@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="../templates/principal.xhtml">
+	<ui:define name="conteudo">
+		<div style="border-bottom: 1px solid #E5E5E5;">
+			<h3>
+				<h:outputText value="#{msg['label.mercadorias']}" />
+				<small> <h:outputText value="#{msg['label.listagem']}" /></small>
+			</h3>
+		</div>
+		<h:form>
+			<p:dataTable id="dataTable" var="requerente"
+				value="#{requerenteBean.todosRequerentes}" paginator="true" rows="5"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15">
+				<p:column width="20">
+					<f:facet name="header">#</f:facet>
+					<h:outputText value="#{requerente.id}" />
+				</p:column>
+
+<!-- 				<p:column sortBy="#{requerente.razaoNome}">
+					<f:facet name="header">
+						<h:outputText value="#{msg['labels.requerente.RazaoNome']}" />
+					</f:facet>
+					<h:link outcome="editarMercadoria" value="#{mercadoria.nome}"
+						title="#{msg['label.editar']} #{mercadoria.nome}">
+						<f:param name="id" value="#{mercadoria.id}" />
+					</h:link>
+				</p:column> -->
+
+				<p:column sortBy="#{requerente.razaoNome}">
+					<f:facet name="header">
+						<h:outputText value="#{msg['labels.requerente.RazaoNome']}" />
+					</f:facet>
+					<h:outputText value="#{requerente.razaoNome}" />
+				</p:column>
+
+				<p:column sortBy="#{requerente.CNPJ}">
+					<f:facet name="header">
+						<h:outputText value="#{msg['labels.requerente.cnpj']}" />
+					</f:facet>
+					<h:outputText value="#{requerente.CNPJ}" />
+				</p:column>
+
+				<p:column sortBy="#{requerente.endereco}">
+					<f:facet name="header">
+						<h:outputText value="#{msg['labels.requerente.endereco']}" />
+					</f:facet>
+					<h:outputText value="#{requerente.endereco}" />
+				</p:column>
+
+				<p:column sortBy="#{requerente.bairroDistrito}">
+					<f:facet name="header">
+						<h:outputText value="#{msg['labels.requerente.bairrodistrito']}" />
+					</f:facet>
+					<h:outputText value="#{requerente.bairroDistrito}">
+						<f:convertNumber type="currency" />
+					</h:outputText>
+				</p:column>
+
+				<p:column sortBy="#{requerente.municipio}">
+					<f:facet name="header">
+						<h:outputText value="#{msg['labels.requerente.municipio']}" />
+					</f:facet>
+					<h:outputText value="#{requerente.municipio}" />
+				</p:column>
+
+				<p:column sortBy="#{requerente.UF}" width="15">
+					<f:facet name="header">
+						<h:outputText value="#{msg['labels.requerente.uf']}" />
+					</f:facet>
+					<h:outputText value="#{requerente.UF}" />
+				</p:column>
+
+				<p:column sortBy="#{requerente.cep}">
+					<f:facet name="header">
+						<h:outputText value="#{msg['labels.requerente.cep']}" />
+					</f:facet>
+					<h:outputText value="#{requerente.cep}" />
+				</p:column>
+
+				<p:column sortBy="#{requerente.pais}">
+					<f:facet name="header">
+						<h:outputText value="#{msg['labels.requerente.pais']}" />
+					</f:facet>
+					<h:outputText value="#{requerente.pais}" />
+				</p:column>
+
+				<p:column sortBy="#{requerente.tel}">
+					<f:facet name="header">
+						<h:outputText value="#{msg['labels.requerente.telefone']}" />
+					</f:facet>
+					<h:outputText value="#{requerente.tel}" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+		<h:messages />
+	</ui:define>
+</ui:composition>

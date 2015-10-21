@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	            xmlns:h="http://java.sun.com/jsf/html"
+	            xmlns:f="http://java.sun.com/jsf/core"
+	            xmlns:ui="http://java.sun.com/jsf/facelets"
+	            xmlns:p="http://primefaces.org/ui"
+	            template="/templates/principal.xhtml">
+
+	<ui:define name="titulo">#{msg['labels.requerente.cadastroRequerente']}</ui:define>
+	<ui:define name="conteudo">
+		<h:form id="formCadReq">
+			<p:growl id="messages" />
+			<p:panel header="#{msg['labels.requerente.cadastroRequerente']}">
+			<h:panelGrid columns="2">
+				<p:outputLabel value="#{msg['labels.requerente.RazaoNome']}" />
+				<p:inputText value="#{cadastroRequerenteBean.requerente.razaoNome}" required="true"/>
+
+				<p:outputLabel value="#{msg['labels.requerente.cnpj']}" />
+				<p:inputMask mask="99.999.999/9999-99" size="18" value="#{cadastroRequerenteBean.requerente.CNPJ}" />
+
+				<p:outputLabel value="#{msg['labels.requerente.endereco']}" />
+				<p:inputText value="#{cadastroRequerenteBean.requerente.endereco}" />
+
+				<p:outputLabel value="#{msg['labels.requerente.bairrodistrito']}" />
+				<p:inputText value="#{cadastroRequerenteBean.requerente.bairroDistrito}" />
+
+				<p:outputLabel value="#{msg['labels.requerente.uf']}" />
+				<p:selectOneMenu value="#{cadastroRequerenteBean.requerente.estado}" required="true" >
+					<p:ajax listener="#{cadastroRequerenteBean.naMudancaEstado()}" update="cidade" />
+					<f:selectItem itemLabel="Selecione" 
+					              itemValue="" 
+					              noSelectionOption="true" />
+					<f:selectItems value="#{cadastroRequerenteBean.todosEstados}" 
+					               var="estado" 
+					               itemValue="#{estado}" 
+					               itemLabel="#{estado.nome}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="#{msg['labels.requerente.municipio']}" />
+				<p:selectOneMenu id="cidade" value="#{cadastroRequerenteBean.requerente.cidade}" required="true">
+					<f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+					<f:selectItems value="#{cadastroRequerenteBean.cidadesPorEstado}"
+						           var="cidade" 
+						           itemValue="#{cidade}" 
+						           itemLabel="#{cidade.nome}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="#{msg['labels.requerente.cep']}" />
+				<p:inputText value="#{cadastroRequerenteBean.requerente.cep}" />
+
+				<p:outputLabel value="#{msg['labels.requerente.pais']}" />
+				<p:inputText value="#{cadastroRequerenteBean.requerente.pais}" />
+
+				<p:outputLabel value="#{msg['labels.requerente.telefone']}" />
+				<p:inputMask mask="(99)9999-9999" value="#{cadastroRequerenteBean.requerente.tel}" />
+
+				<p:outputLabel value="#{msg['labels.requerente.telopcional']}" />
+				<p:inputText value="#{cadastroRequerenteBean.requerente.telOpcional}" />
+
+				<p:outputLabel value="#{msg['labels.requerente.telefoneoutro']}" />
+				<p:inputText value="#{cadastroRequerenteBean.requerente.telOutro}" />
+
+				<p:outputLabel value="#{msg['labels.requerente.correioeletr']}" />
+				<p:inputText value="#{cadastroRequerenteBean.requerente.email}" required="false" immediate="true">
+					<f:validator validatorId="EmailValida" />
+				</p:inputText>
+
+				<p:commandButton value="Gravar" actionListener="#{cadastroRequerenteBean.salvar}" update="messages" />
+			</h:panelGrid>			
+			</p:panel>			
+		</h:form>
+	</ui:define>
+</ui:composition>

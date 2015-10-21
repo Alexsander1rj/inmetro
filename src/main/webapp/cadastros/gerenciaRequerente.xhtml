@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/principal.xhtml">
+
+	<ui:define name="titulo"></ui:define>
+	<ui:define name="conteudo">
+		<h:form id="form">
+			<p:growl id="messages" />
+
+			<p:toolbar style="margin-top: 20px">
+				<p:toolbarGroup>
+					<p:commandButton value="Novo Cadastro" action="cadastroRequerente" />
+				</p:toolbarGroup>
+			</p:toolbar>			
+
+			<p:dataTable id="dataTable" var="requerente"
+				value="#{cadastroRequerenteBean.todosRequerentes}" paginator="true"
+				rows="10"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15"
+				paginatorPosition="bottom">
+
+				<p:column sortBy="#{requerente.razaoNome}" width="200">
+					<f:facet name="header">
+						<h:outputText value="#{msg['labels.requerente.RazaoNome']}" />
+					</f:facet>
+					<h:outputText value="#{requerente.razaoNome}" />
+				</p:column>
+
+				<p:column sortBy="#{requerente.CNPJ}" width="160">
+					<f:facet name="header">
+						<h:outputText value="#{msg['labels.requerente.cnpj']}" />
+					</f:facet>
+					<h:outputText value="#{requerente.CNPJ}" />
+				</p:column>
+
+				<p:column sortBy="#{requerente.tel}" width="120">
+					<f:facet name="header">
+						<h:outputText value="#{msg['labels.requerente.telefone']}" />
+					</f:facet>
+					<h:outputText value="#{requerente.tel}" />
+				</p:column>
+
+				<p:column sortBy="#{requerente.email}" width="200">
+					<f:facet name="header">
+						<h:outputText value="#{msg['labels.requerente.correioeletr']}" />
+					</f:facet>
+					<h:outputText value="#{requerente.email}" />
+				</p:column>
+
+				<p:column width="50">
+					<p:graphicImage library="figura" name="editar.jpg" width="20"
+						height="20" />
+
+					<p:commandLink value="#{msg['labels.msg.editar']}"
+						action="cadastroRequerente">
+						<f:setPropertyActionListener
+							target="#{cadastroRequerenteBean.requerente}"
+							value="#{requerente}" />
+					</p:commandLink>
+
+				</p:column>
+
+				<p:column width="50">
+					<p:graphicImage library="figura" name="excluir.png" width="20" height="20" />
+
+					<p:commandLink value="#{msg['labels.msg.excluir']}"
+						onclick="PF('cd').show()">
+						<f:setPropertyActionListener target="#{cadastroRequerenteBean.requerente}"
+							value="#{requerente}" />
+					</p:commandLink>
+
+				</p:column>
+			</p:dataTable>
+		</h:form>
+
+		<p:confirmDialog message="#{msg['labels.msg.confExclusao']}"
+			header="#{msg['labels.msg.exclusao']}" severity="alert"
+			widgetVar="cd" appendTo="@(body)">
+			<p:commandButton value="#{msg['labels.msg.sim']}"
+				actionListener="#{cadastroRequerenteBean.excluir}"
+				oncomplete="PF('cd').hide()" update="form:messages form:dataTable" />
+
+			<p:commandButton value="#{msg['labels.msg.nao']}"
+				onclick="PF('cd').hide()" type="button" />
+		</p:confirmDialog>
+
+	</ui:define>
+</ui:composition>
