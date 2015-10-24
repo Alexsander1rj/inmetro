@@ -1,47 +1,35 @@
 package br.gov.inmetro.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 @Entity
-public class Estado implements Serializable{
+public class Pais implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	private Long id;
-	private String sigla;
-	private String nome;
-	@OneToMany(mappedBy="estado")
-	private List<Cidade> cidades;
-	
-	public List<Cidade> getCidades() {
-		return cidades;
-	}
-	public void setCidades(List<Cidade> cidades) {
-		this.cidades = cidades;
-	}
-	
+	private String nomeBR;
+	private String nomeUS;
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getSigla() {
-		return sigla;
+	public String getNomeBR() {
+		return nomeBR;
 	}
-	public void setSigla(String sigla) {
-		this.sigla = sigla;
+	public void setNomeBR(String nomeBR) {
+		this.nomeBR = nomeBR;
 	}
-	public String getNome() {
-		return nome;
+	public String getNomeUS() {
+		return nomeUS;
 	}
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setNomeUS(String nomeUS) {
+		this.nomeUS = nomeUS;
 	}
 	
 	@Override
@@ -51,6 +39,7 @@ public class Estado implements Serializable{
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -59,7 +48,7 @@ public class Estado implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Estado other = (Estado) obj;
+		Pais other = (Pais) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

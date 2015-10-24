@@ -46,7 +46,7 @@
 				</p:selectOneMenu>
 
 				<p:outputLabel value="#{msg['labels.requerente.cep']}" />
-				<p:inputText value="#{cadastroRequerenteBean.requerente.cep}" />
+				<p:inputMask mask="99.999-999" value="#{cadastroRequerenteBean.requerente.cep}" />
 
 				<p:outputLabel value="#{msg['labels.requerente.pais']}" />
 				<p:inputText value="#{cadastroRequerenteBean.requerente.pais}" />
@@ -55,17 +55,17 @@
 				<p:inputMask mask="(99)9999-9999" value="#{cadastroRequerenteBean.requerente.tel}" />
 
 				<p:outputLabel value="#{msg['labels.requerente.telopcional']}" />
-				<p:inputText value="#{cadastroRequerenteBean.requerente.telOpcional}" />
+				<p:inputMask mask="(99)9999-9999" value="#{cadastroRequerenteBean.requerente.telOpcional}" />
 
 				<p:outputLabel value="#{msg['labels.requerente.telefoneoutro']}" />
-				<p:inputText value="#{cadastroRequerenteBean.requerente.telOutro}" />
+				<p:inputMask mask="(99)9999-9999" value="#{cadastroRequerenteBean.requerente.telOutro}" />
 
 				<p:outputLabel value="#{msg['labels.requerente.correioeletr']}" />
 				<p:inputText value="#{cadastroRequerenteBean.requerente.email}" required="false" immediate="true">
 					<f:validator validatorId="EmailValida" />
 				</p:inputText>
 
-				<p:commandButton value="Gravar" actionListener="#{cadastroRequerenteBean.salvar}" update="messages" />
+				<p:commandButton icon="ui-icon-disk" value="Gravar" actionListener="#{cadastroRequerenteBean.salvar}" update="messages" />
 			</h:panelGrid>			
 			</p:panel>			
 		</h:form>

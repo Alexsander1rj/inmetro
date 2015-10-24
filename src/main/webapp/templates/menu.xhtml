@@ -9,12 +9,12 @@
 		<p:panelMenu>
 			<p:submenu label="Cadastros">
 				<p:menuitem value="Requerente" url="/cadastros/gerenciaRequerente.xhtml"
-					icon="ui-icon-disk" />
+					icon="ui-icon-person" />
 				<p:menuitem value="Medidor" url="/cadastros/gerenciaMedidor.xhtml"
 					icon="ui-icon-arrowrefresh-1-w" />
 			</p:submenu>
 			<p:submenu label="Relatórios">
-				<p:menuitem value="Requerentes" target="blank" actionListener="#{cadastroRequerenteBean.imprimir}" icon="ui-icon-arrowrefresh-1-w" ajax="false"/>
+				<p:menuitem value="Requerentes" target="blank" actionListener="#{cadastroRequerenteBean.imprimir}" icon="ui-icon-document" ajax="false"/>
 			</p:submenu>
 		</p:panelMenu>
 	</h:form>

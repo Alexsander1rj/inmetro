@@ -38,13 +38,6 @@
 					<h:outputText value="#{medidor.modelo}" />
 				</p:column>
 
-				<p:column sortBy="#{medidor.numeroSerie}" width="160">
-					<f:facet name="header">
-						<h:outputText value="#{msg['labels.medidor.numeroSerie']}" />
-					</f:facet>
-					<h:outputText value="#{medidor.numeroSerie}" />
-				</p:column>
-
 				<p:column width="50">
 					<p:graphicImage library="figura" name="editar.jpg" width="20" height="20" />
 
@@ -65,15 +58,19 @@
 		</h:form>
 
 		<p:confirmDialog message="#{msg['labels.msg.confExclusao']}"
-			             header="#{msg['labels.msg.exclusao']}" severity="alert"
-			             widgetVar="cd" appendTo="@(body)">
-			<p:commandButton value="#{msg['labels.msg.sim']}"
-				             actionListener="#{cadastroMedidorBean.excluir}" 
-				             oncomplete="PF('cd').hide()"
-				             update="form:messages form:dataTable" />
+			             header="#{msg['labels.msg.exclusao']}"
+			             severity="alert"
+			             widgetVar="cd"
+			             appendTo="@(body)">
+			<h:form>
+				<p:commandButton value="#{msg['labels.msg.sim']}" 
+				                 actionListener="#{cadastroMedidorBean.excluir}"
+					             oncomplete="PF('cd').hide()" 
+					             update="form:messages form:dataTable" />
 
-			<p:commandButton value="#{msg['labels.msg.nao']}"
-				             onclick="PF('cd').hide()" type="button" />
+				<p:commandButton value="#{msg['labels.msg.nao']}" onclick="PF('cd').hide()" type="button" />
+
+			</h:form>
 		</p:confirmDialog>
 
 	</ui:define>

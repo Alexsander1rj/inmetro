@@ -79,14 +79,18 @@
 		</h:form>
 
 		<p:confirmDialog message="#{msg['labels.msg.confExclusao']}"
-			header="#{msg['labels.msg.exclusao']}" severity="alert"
-			widgetVar="cd" appendTo="@(body)">
-			<p:commandButton value="#{msg['labels.msg.sim']}"
-				actionListener="#{cadastroRequerenteBean.excluir}"
-				oncomplete="PF('cd').hide()" update="form:messages form:dataTable" />
+			             header="#{msg['labels.msg.exclusao']}" 
+			             severity="alert"
+			             widgetVar="cd" 
+			             appendTo="@(body)">
+			<h:form>
+				<p:commandButton value="#{msg['labels.msg.sim']}"
+					actionListener="#{cadastroRequerenteBean.excluir}"
+					oncomplete="PF('cd').hide()" update="form:messages form:dataTable" />
 
-			<p:commandButton value="#{msg['labels.msg.nao']}"
-				onclick="PF('cd').hide()" type="button" />
+				<p:commandButton value="#{msg['labels.msg.nao']}"
+					onclick="PF('cd').hide()" type="button" />
+			</h:form>
 		</p:confirmDialog>
 
 	</ui:define>

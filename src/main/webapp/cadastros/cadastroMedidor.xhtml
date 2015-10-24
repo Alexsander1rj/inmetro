@@ -12,22 +12,268 @@
 			<p:growl id="messages" />
 			<p:panel header="#{msg['labels.medidor.cadastroMedidor']}">
 				<h:panelGrid columns="2">
+					<p:outputLabel value="#{msg['labels.medidor.requerente']}" />
+					<p:selectOneMenu value="#{cadastroMedidorBean.medidor.requerente}" required="true">
+						<f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+						<f:selectItems value="#{cadastroMedidorBean.todosRequerentes}" 
+						               var="requerente" 
+						               itemValue="#{requerente}" 
+						               itemLabel="#{requerente.razaoNome}" />
+					</p:selectOneMenu>
+				
 					<p:outputLabel value="#{msg['labels.medidor.fabricante']}" />
 					<p:inputText value="#{cadastroMedidorBean.medidor.fabricante}" required="true" />
+
+					<p:outputLabel value="#{msg['labels.medidor.marca']}" />
+					<p:inputText value="#{cadastroMedidorBean.medidor.marca}" required="true" />
+
+					<p:outputLabel value="#{msg['labels.medidor.paisOrigem']}" />
+					<p:selectOneMenu value="#{cadastroMedidorBean.medidor.pais}" required="true">
+						<f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+						<f:selectItems value="#{cadastroMedidorBean.todosPaises}" 
+						               var="pais" 
+						               itemValue="#{pais}" 
+						               itemLabel="#{pais.nomeBR}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="#{msg['labels.medidor.instrumento']}" />
+					<p:inputText value="#{cadastroMedidorBean.medidor.instrumento}" required="true" />
 
 					<p:outputLabel value="#{msg['labels.medidor.modelo']}" />
 					<p:inputText value="#{cadastroMedidorBean.medidor.modelo}" />
 
-					<p:outputLabel value="#{msg['labels.medidor.numeroSerie']}" />
-					<p:inputText value="#{cadastroMedidorBean.medidor.numeroSerie}" />
-
-					<p:outputLabel value="Foto" />
-					<p:fileUpload value="#{cadastroMedidorBean.uploadFile}" mode="simple" />
-
-					<p:commandButton value="Gravar"
-						actionListener="#{cadastroMedidorBean.salvar}" update="messages"
-						ajax="false" />
 				</h:panelGrid>
+
+				<p:fieldset legend="#{msg['labels.medidor.definicaoSolicitacao']}">
+					<p:selectOneRadio value="#{cadastroMedidorBean.medidor.definicaoSolicitacao}">
+					<p:ajax listener="#{cadastroMedidorBean.verificaObsDefSolicitacao()}" update="obsDefSolicitacao"/>
+						<f:selectItems value="#{cadastroMedidorBean.definicaoSolicitacao}"
+							           var="definicao"
+							           itemValue="#{definicao}"
+							           itemLabel="#{definicao.descricao}" />
+					</p:selectOneRadio>
+
+					<p:panel id="obsDefSolicitacao" visible="#{cadastroMedidorBean.exibeObsDefSolicitacao}" >
+						<p:inputTextarea value="#{cadastroMedidorBean.medidor.obsDefSolicitacao}"/>
+					</p:panel>
+
+				</p:fieldset>
+
+				<p:fieldset legend="#{msg['labels.medidor.classeExatidao']}">
+					<p:selectOneRadio value="#{cadastroMedidorBean.medidor.classeExatidao}">
+						<f:selectItems value="#{cadastroMedidorBean.classeExatidao}"
+							           var="classe"
+							           itemValue="#{classe}"
+							           itemLabel="#{classe}" />
+					</p:selectOneRadio>
+
+				</p:fieldset>
+
+				<p:fieldset legend="#{msg['labels.medidor.grandezaMedida']}">
+					<p:selectOneRadio value="#{cadastroMedidorBean.medidor.grandezaMedida}">
+						<f:selectItems value="#{cadastroMedidorBean.grandezaMedida}"
+							           var="grandeza" 
+							           itemValue="#{grandeza}" 
+							           itemLabel="#{grandeza.descricao}" />
+					</p:selectOneRadio>
+
+				</p:fieldset>
+
+				<p:fieldset legend="#{msg['labels.medidor.constanteCalibracao']}">
+					<p:inputText value="#{cadastroMedidorBean.medidor.constCalibracaoWh}"/>
+					<p:outputLabel value="#{msg['labels.medidor.wh']}"/>
+					<p:inputText value="#{cadastroMedidorBean.medidor.constCalibracaovarh}"/>
+					<p:outputLabel value="#{msg['labels.medidor.varh']}"/>
+				</p:fieldset>
+
+				<p:fieldset legend="#{msg['labels.medidor.constanteEletronica']}">
+					<p:inputText value="#{cadastroMedidorBean.medidor.constEletronicaWh}" />
+					<p:outputLabel value="#{msg['labels.medidor.wh']}" />
+					<p:inputText value="#{cadastroMedidorBean.medidor.constEletronicavarh}" />
+					<p:outputLabel value="#{msg['labels.medidor.varh']}" />
+				</p:fieldset>
+				
+				<p:fieldset legend="#{msg['labels.medidor.tipoInstalacao']}">
+					<p:selectOneRadio value="#{cadastroMedidorBean.medidor.tipoInstalacao}">
+					<p:ajax listener="#{cadastroMedidorBean.verificaObsTipoInstalacao()}" update="obsTipoInstalacao"/>
+						<f:selectItems value="#{cadastroMedidorBean.tipoInstalacao}"
+							           var="instalacao"
+							           itemValue="#{instalacao}"
+							           itemLabel="#{instalacao.descricao}" />
+					</p:selectOneRadio>
+
+					<p:panel id="obsTipoInstalacao" visible="#{cadastroMedidorBean.exibeObsTipoInstalacao}" >
+						<p:inputTextarea value="#{cadastroMedidorBean.medidor.obsTipoInstalacao}"/>
+					</p:panel>
+
+				</p:fieldset>
+
+				<p:fieldset legend="#{msg['labels.medidor.configEletrica']}">
+					<p:selectOneRadio value="#{cadastroMedidorBean.medidor.configuracaoEletrica}">
+						<p:ajax listener="#{cadastroMedidorBean.verificaObsConfigEletrica()}" update="obsConfigEletrica" />
+						<f:selectItems value="#{cadastroMedidorBean.configuracaoEletrica}"
+							           var="configuracao"
+							           itemValue="#{configuracao}"
+							           itemLabel="#{configuracao.descricao}" />
+					</p:selectOneRadio>
+
+					<p:panel id="obsConfigEletrica" visible="#{cadastroMedidorBean.exibeObsConfigEletrica}">
+						<p:inputTextarea value="#{cadastroMedidorBean.medidor.obsConfigEletrica}" />
+					</p:panel>
+
+				</p:fieldset>
+
+				<p:fieldset legend="#{msg['labels.medidor.sentidosFluxo']}">
+					<p:selectOneRadio value="#{cadastroMedidorBean.medidor.sentidosFluxo}">
+						<f:selectItems value="#{cadastroMedidorBean.sentidosFluxo}"
+							           var="sentido" 
+							           itemValue="#{sentido}"
+							           itemLabel="#{sentido.descricao}" />
+					</p:selectOneRadio>
+				</p:fieldset>
+
+				<p:fieldset legend="#{msg['labels.medidor.tensaoNominal']}">
+					<p:selectOneRadio value="#{cadastroMedidorBean.medidor.tensaoNominal}">
+						<p:ajax listener="#{cadastroMedidorBean.verificaObsTensaoNominal()}"
+							    update="obsTensaoNominal" />
+						<f:selectItems value="#{cadastroMedidorBean.tensaoNominal}"
+							           var="tensao" 
+							           itemValue="#{tensao}"
+							           itemLabel="#{tensao.descricao}" />
+					</p:selectOneRadio>
+
+					<p:panel id="obsTensaoNominal"
+						visible="#{cadastroMedidorBean.exibeObsTensaoNominal}">
+						<p:inputTextarea
+							value="#{cadastroMedidorBean.medidor.obsTensaoNominal}" />
+					</p:panel>
+
+				</p:fieldset>
+
+				<p:fieldset legend="#{msg['labels.medidor.multiTensao']}">
+					<p:selectOneRadio value="#{cadastroMedidorBean.medidor.medidorMultitensao}">
+						<f:selectItem itemValue="true" itemLabel="#{msg['labels.msg.sim']}" />
+						<f:selectItem itemValue="false" itemLabel="#{msg['labels.msg.nao']}" />
+					</p:selectOneRadio>
+				</p:fieldset>
+				
+				<p:fieldset legend="#{msg['labels.medidor.faixaTensao']}">
+					<p:inputText value="#{cadastroMedidorBean.medidor.faixaTensaoInicial}"/>
+					<p:outputLabel value="V"/>
+					<p:inputText value="#{cadastroMedidorBean.medidor.faixaTensaoFinal}"/>
+					<p:outputLabel value="V"/>
+				</p:fieldset>
+
+				<p:fieldset legend="#{msg['labels.medidor.tipoAlimentacao']}">
+					<p:selectOneRadio value="#{cadastroMedidorBean.medidor.tipoAlimEletrica}">
+						<f:selectItems value="#{cadastroMedidorBean.tipoAlimentacao}"
+							var="alimentacao" itemValue="#{alimentacao}"
+							itemLabel="#{alimentacao.descricao}" />
+					</p:selectOneRadio>
+				</p:fieldset>
+
+				<p:fieldset legend="#{msg['labels.medidor.correnteNominal']}">
+					<p:selectOneRadio value="#{cadastroMedidorBean.medidor.correnteNominal}">
+						<p:ajax listener="#{cadastroMedidorBean.verificaObsCorrenteNominal()}"
+							    update="obsCorrenteNominal" />
+						<f:selectItems value="#{cadastroMedidorBean.correnteNominal}"
+							           var="nominal" 
+							           itemValue="#{nominal}"
+							           itemLabel="#{nominal.descricao}" />
+					</p:selectOneRadio>
+
+					<p:panel id="obsCorrenteNominal" visible="#{cadastroMedidorBean.exibeObsCorrenteNominal}">
+						<p:inputTextarea value="#{cadastroMedidorBean.medidor.obsCorrenteNominal}" />
+					</p:panel>
+
+				</p:fieldset>
+
+				<p:fieldset legend="#{msg['labels.medidor.correnteMaxima']}">
+					<p:selectOneRadio value="#{cadastroMedidorBean.medidor.correnteMaxima}">
+						<p:ajax listener="#{cadastroMedidorBean.verificaObsCorrenteMaxima()}"
+							    update="obsCorrenteMaxima" />
+						<f:selectItems value="#{cadastroMedidorBean.correnteMaxima}"
+							           var="maxima" 
+							           itemValue="#{maxima}"
+							           itemLabel="#{maxima.descricao}" />
+					</p:selectOneRadio>
+
+					<p:panel id="obsCorrenteMaxima" visible="#{cadastroMedidorBean.exibeObsCorrenteMaxima}">
+						<p:inputTextarea value="#{cadastroMedidorBean.medidor.obsCorrenteMaxima}" />
+					</p:panel>
+
+				</p:fieldset>
+
+				<p:fieldset legend="#{msg['labels.medidor.tipoMostrador']}">
+					<p:selectOneRadio value="#{cadastroMedidorBean.medidor.tipoMostrador}">
+						<f:selectItems value="#{cadastroMedidorBean.tipoMostrador}"
+							           var="mostrador" 
+							           itemValue="#{mostrador}"
+							           itemLabel="#{mostrador.descricao}" />
+					</p:selectOneRadio>
+
+					<p:inputTextarea value="#{cadastroMedidorBean.medidor.obsTipoMosrador}" />
+					
+					<p:fieldset legend="#{msg['labels.medidor.registrador']}">
+					<p:selectOneRadio value="#{cadastroMedidorBean.medidor.tipoRegistrador}">
+					<f:selectItems value="#{cadastroMedidorBean.tipoRegistrador}"
+					               var="registrador"
+					               itemValue="#{registrador}"
+					               itemLabel="#{registrador.descricao}"/>
+					</p:selectOneRadio>					
+					</p:fieldset>
+
+				</p:fieldset>
+
+				<p:fieldset legend="#{msg['labels.medidor.frequencia']}">
+					<p:selectOneRadio value="#{cadastroMedidorBean.medidor.tipoFrequencia}">
+						<f:selectItems value="#{cadastroMedidorBean.tipoFrequencia}"
+							           var="frequencia" 
+							           itemValue="#{frequencia}"
+							           itemLabel="#{frequencia.descricao}" />
+					</p:selectOneRadio>
+				</p:fieldset>
+
+				<p:fieldset legend="#{msg['labels.medidor.interfaceComunicacao']}">
+					<p:selectOneRadio value="#{cadastroMedidorBean.medidor.interfaceComunicacao}">
+						<p:ajax listener="#{cadastroMedidorBean.verificaObsInterface()}"
+						        update="obsInterface" />
+						<f:selectItems value="#{cadastroMedidorBean.interfaceComunicacao}"
+							           var="interfaceComunicacao" 
+							           itemValue="#{interfaceComunicacao}"
+							           itemLabel="#{interfaceComunicacao.descricao}" />
+					</p:selectOneRadio>
+
+					<p:panel id="obsInterface" visible="#{cadastroMedidorBean.exibeObsInterfaceCom}">
+						<p:inputTextarea value="#{cadastroMedidorBean.medidor.obsIntfComunicacao}" />
+					</p:panel>
+				</p:fieldset>
+
+				<p:fieldset legend="#{msg['labels.medidor.dispositivosComplementares']}">
+					<p:selectOneRadio value="#{cadastroMedidorBean.medidor.dispositivosComplementares}">
+					<p:ajax update="obsDispComplementares"/>
+						<f:selectItem itemValue="true" itemLabel="#{msg['labels.msg.sim']}" />
+						<f:selectItem itemValue="false" itemLabel="#{msg['labels.msg.nao']}" />
+					</p:selectOneRadio>
+
+					<p:panel id="obsDispComplementares" visible="#{cadastroMedidorBean.medidor.dispositivosComplementares}">
+						<p:inputTextarea value="#{cadastroMedidorBean.medidor.obsDispComplementares}" />
+					</p:panel>
+				</p:fieldset>
+
+				<p:fieldset legend="#{msg['labels.medidor.descricaoGeral']}">
+					<p:inputTextarea value="#{cadastroMedidorBean.medidor.obsDescricaoGeral}" />
+				</p:fieldset>
+
+				<p:fieldset legend="#{msg['labels.medidor.informacoesAdicionais']}">
+					<p:inputTextarea value="#{cadastroMedidorBean.medidor.obsInfAdicionais}" />
+				</p:fieldset>
+
+				<p:fieldset legend="#{msg['labels.medidor.foto']}">
+					<p:fileUpload value="#{cadastroMedidorBean.uploadFile}" mode="simple" />
+				</p:fieldset>
+
+				<p:commandButton icon="ui-icon-disk" value="Gravar" actionListener="#{cadastroMedidorBean.salvar}" update="messages" ajax="false" />
 			</p:panel>
 		</h:form>
 	</ui:define>
