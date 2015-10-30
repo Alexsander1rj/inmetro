@@ -1,14 +1,10 @@
-header {
-padding: 5px;
-margin-bottom: 20px;
-height: 30px;
-background-color: #545454;
-color: #fff;
-box-shadow: 0px 2px 2px #ccc
+#imagem{
+	max-height: 100%;
+	height: auto;
+	width: auto;
 }
 
-img{
-	max-width: 100%;
-	height: ;
-	width: ;
+#headerImg{
+	height: 25%;
+	width: 25%;
 }

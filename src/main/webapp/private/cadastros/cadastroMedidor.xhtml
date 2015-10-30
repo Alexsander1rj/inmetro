@@ -4,7 +4,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
-	template="/templates/principal.xhtml">
+	template="/private/templates/principal.xhtml">
 
 	<ui:define name="titulo">#{msg['labels.medidor.cadastroMedidor']}</ui:define>
 	<ui:define name="conteudo">
@@ -273,7 +273,7 @@
 					<p:fileUpload value="#{cadastroMedidorBean.uploadFile}" mode="simple" />
 				</p:fieldset>
 
-				<p:commandButton icon="ui-icon-disk" value="Gravar" actionListener="#{cadastroMedidorBean.salvar}" update="messages" ajax="false" />
+				<p:commandButton icon="fa fa-save" value="Gravar" actionListener="#{cadastroMedidorBean.salvar}" update="messages" ajax="false" />
 			</p:panel>
 		</h:form>
 	</ui:define>

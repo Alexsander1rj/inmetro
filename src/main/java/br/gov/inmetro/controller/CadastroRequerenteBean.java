@@ -25,10 +25,12 @@ import javax.servlet.http.HttpServletResponse;
 import br.gov.inmetro.model.Cidade;
 import br.gov.inmetro.model.Estado;
 import br.gov.inmetro.model.Requerente;
+import br.gov.inmetro.relatorio.RelatorioUtil;
 import br.gov.inmetro.repository.CidadeRepository;
 import br.gov.inmetro.repository.EstadoRepository;
 import br.gov.inmetro.repository.RequerenteRepository;
 import br.gov.inmetro.service.CadastroRequerente;
+import br.gov.inmetro.util.RelatorioWeb;
 import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -120,64 +122,20 @@ public class CadastroRequerenteBean implements Serializable {
 	public void imprimir() {
 		List<Requerente> listaRequerentes = new ArrayList<Requerente>();
 		FacesContext context = FacesContext.getCurrentInstance();
+		ServletContext scontext = (ServletContext) context.getExternalContext().getContext();
+		String sourceFileName = scontext.getRealPath("/WEB-INF/classes/br/gov/inmetro/jasper/requerentes.jasper");
 
-		for (int i = 0; i < this.todosRequerentes.getRowCount(); i++) {
-			this.todosRequerentes.setRowIndex(i);
-			listaRequerentes.add((Requerente) this.todosRequerentes
-					.getRowData());
-		}
+		if (todosRequerentes.iterator().hasNext())
+			listaRequerentes.add(todosRequerentes.iterator().next());
 
-		try {
-			// requerenteRel.imprimir(listaRequerentes, context);
+		context.responseComplete();
 
-			context.responseComplete();
+		HashMap<String, Object> parameters = new HashMap<String, Object>();
 
-			HashMap<String, Object> parameters = new HashMap<String, Object>();
 
-			ServletContext scontext = (ServletContext) context
-					.getExternalContext().getContext();
-
-			JasperPrint jasperPrint = JasperFillManager.fillReport(scontext
-					.getRealPath("/WEB-INF/classes/jasper/requerentes.jasper"),
-					parameters,
-					new JRBeanCollectionDataSource(listaRequerentes));
-
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-			JRPdfExporter exporter = new JRPdfExporter();
-
-			exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-
-			exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, baos);
-
-			exporter.exportReport();
-
-			byte[] bytes = baos.toByteArray();
-
-			if (bytes != null && bytes.length > 0) {
-
-				HttpServletResponse response = (HttpServletResponse) context
-						.getExternalContext().getResponse();
-
-				response.setContentType("application/pdf");
-
-				response.setHeader("Content-disposition",
-						"inline; filename=\"Relatorio_de_requerentes.pdf\"");
-
-				response.setContentLength(bytes.length);
-
-				ServletOutputStream outputStream = response.getOutputStream();
-
-				outputStream.write(bytes, 0, bytes.length);
-
-				outputStream.flush();
-
-				outputStream.close();
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		RelatorioWeb relatorio = new RelatorioWeb(context, sourceFileName, parameters, listaRequerentes);
+		
+		relatorio.exportaArquivo();
 	}
 
 	public Requerente getRequerente() {

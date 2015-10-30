@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1"
-	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	         xmlns="http://xmlns.jcp.org/xml/ns/persistence" 
+	         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+
 	<persistence-unit name="inmetroPU" transaction-type="RESOURCE_LOCAL">
-	<provider>org.hibernate.ejb.HibernatePersistence</provider>
-	<class>br.gov.inmetro.model.Requerente</class>
-	<class>br.gov.inmetro.model.Medidor</class>
-	<class>br.gov.inmetro.model.Estado</class>
-	<class>br.gov.inmetro.model.Cidade</class>
-	<class>br.gov.inmetro.model.Pais</class>
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<jta-data-source>java:/comp/env/jdbc/INMETRO</jta-data-source>
+
+		<class>br.gov.inmetro.model.Requerente</class>
+		<class>br.gov.inmetro.model.Medidor</class>
+		<class>br.gov.inmetro.model.Estado</class>
+		<class>br.gov.inmetro.model.Cidade</class>
+		<class>br.gov.inmetro.model.Pais</class>
+		
 		<properties>
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/inmetro" />
-			<property name="javax.persistence.jdbc.user" value="alex" />
-			<property name="javax.persistence.jdbc.password" value="210376" />
-			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />

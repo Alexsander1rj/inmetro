@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition>
+	<h:form>
+		<p:panelMenu>
+			<p:submenu label="#{msg['labels.cadastros']}">
+				<p:menuitem value="#{msg['labels.requerente']}" url="/private/cadastros/gerenciaRequerente.xhtml" icon="ui-icon-person" />
+				<p:menuitem value="#{msg['labels.medidor']}" url="/private/cadastros/gerenciaMedidor.xhtml" icon="ui-icon-arrowrefresh-1-w" />
+			</p:submenu>
+			<p:submenu label="#{msg['labels.relatorios']}">
+				<p:menuitem value="#{msg['labels.requerente']}" target="blank" actionListener="#{cadastroRequerenteBean.imprimir}" icon="ui-icon-document" ajax="false" />
+			</p:submenu>
+			<p:submenu label="#{msg['labels.sistema']}">
+				<p:menuitem icon="ui-icon-unlocked" value="Logout" url="/j_spring_security_logout" />
+			</p:submenu>
+		</p:panelMenu>
+	</h:form>
+</ui:composition>
+</html>
