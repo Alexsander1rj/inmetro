@@ -6,11 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 
 public class RelatorioUtil {
 	public static byte[] imprimir(String sourceFileName, HashMap<String, Object> parameters, List<?> dataSource) {
@@ -31,13 +32,11 @@ public class RelatorioUtil {
 
 	private static byte[] exportaArquivoPDF(JasperPrint jasperPrint) throws JRException, IOException {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
+		
 		JRPdfExporter exporter = new JRPdfExporter();
-
-		exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-
-		exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, baos);
-
+		
+		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(baos));
 		exporter.exportReport();
 
 		byte[] bytes = baos.toByteArray();

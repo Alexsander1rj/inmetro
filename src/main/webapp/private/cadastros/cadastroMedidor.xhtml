@@ -8,6 +8,7 @@
 
 	<ui:define name="titulo">#{msg['labels.medidor.cadastroMedidor']}</ui:define>
 	<ui:define name="conteudo">
+	<h:outputStylesheet library="css" name="estilo.css" />
 		<h:form id="form" enctype="multipart/form-data">
 			<p:growl id="messages" />
 			<p:panel header="#{msg['labels.medidor.cadastroMedidor']}">
@@ -53,8 +54,9 @@
 							           itemLabel="#{definicao.descricao}" />
 					</p:selectOneRadio>
 
-					<p:panel id="obsDefSolicitacao" visible="#{cadastroMedidorBean.exibeObsDefSolicitacao}" >
-						<p:inputTextarea value="#{cadastroMedidorBean.medidor.obsDefSolicitacao}"/>
+					<p:panel id="obsDefSolicitacao" visible="#{cadastroMedidorBean.exibeObsDefSolicitacao}" styleClass="painel-observacao">
+						<p:inputTextarea value="#{cadastroMedidorBean.medidor.obsDefSolicitacao}"
+						                 rows="8" cols="100"/>
 					</p:panel>
 
 				</p:fieldset>
@@ -103,7 +105,9 @@
 					</p:selectOneRadio>
 
 					<p:panel id="obsTipoInstalacao" visible="#{cadastroMedidorBean.exibeObsTipoInstalacao}" >
-						<p:inputTextarea value="#{cadastroMedidorBean.medidor.obsTipoInstalacao}"/>
+						<p:inputTextarea value="#{cadastroMedidorBean.medidor.obsTipoInstalacao}" 
+						                 styleClass="observacao"
+						                 rows="8" cols="100"/>
 					</p:panel>
 
 				</p:fieldset>
@@ -118,7 +122,9 @@
 					</p:selectOneRadio>
 
 					<p:panel id="obsConfigEletrica" visible="#{cadastroMedidorBean.exibeObsConfigEletrica}">
-						<p:inputTextarea value="#{cadastroMedidorBean.medidor.obsConfigEletrica}" />
+						<p:inputTextarea value="#{cadastroMedidorBean.medidor.obsConfigEletrica}" 
+						                 styleClass="observacao"
+						                 rows="8" cols="100"/>
 					</p:panel>
 
 				</p:fieldset>
@@ -144,8 +150,9 @@
 
 					<p:panel id="obsTensaoNominal"
 						visible="#{cadastroMedidorBean.exibeObsTensaoNominal}">
-						<p:inputTextarea
-							value="#{cadastroMedidorBean.medidor.obsTensaoNominal}" />
+						<p:inputTextarea value="#{cadastroMedidorBean.medidor.obsTensaoNominal}" 
+						                 styleClass="observacao"
+						                 rows="8" cols="100"/>
 					</p:panel>
 
 				</p:fieldset>
@@ -183,7 +190,8 @@
 					</p:selectOneRadio>
 
 					<p:panel id="obsCorrenteNominal" visible="#{cadastroMedidorBean.exibeObsCorrenteNominal}">
-						<p:inputTextarea value="#{cadastroMedidorBean.medidor.obsCorrenteNominal}" />
+						<p:inputTextarea value="#{cadastroMedidorBean.medidor.obsCorrenteNominal}" 
+						                 rows="8" cols="100"/>
 					</p:panel>
 
 				</p:fieldset>
@@ -199,7 +207,8 @@
 					</p:selectOneRadio>
 
 					<p:panel id="obsCorrenteMaxima" visible="#{cadastroMedidorBean.exibeObsCorrenteMaxima}">
-						<p:inputTextarea value="#{cadastroMedidorBean.medidor.obsCorrenteMaxima}" />
+						<p:inputTextarea value="#{cadastroMedidorBean.medidor.obsCorrenteMaxima}"
+						                 rows="8" cols="100" />
 					</p:panel>
 
 				</p:fieldset>
@@ -212,7 +221,8 @@
 							           itemLabel="#{mostrador.descricao}" />
 					</p:selectOneRadio>
 
-					<p:inputTextarea value="#{cadastroMedidorBean.medidor.obsTipoMosrador}" />
+					<p:inputTextarea value="#{cadastroMedidorBean.medidor.obsTipoMosrador}" 
+					                 rows="8" cols="100"/>
 					
 					<p:fieldset legend="#{msg['labels.medidor.registrador']}">
 					<p:selectOneRadio value="#{cadastroMedidorBean.medidor.tipoRegistrador}">
@@ -245,7 +255,8 @@
 					</p:selectOneRadio>
 
 					<p:panel id="obsInterface" visible="#{cadastroMedidorBean.exibeObsInterfaceCom}">
-						<p:inputTextarea value="#{cadastroMedidorBean.medidor.obsIntfComunicacao}" />
+						<p:inputTextarea value="#{cadastroMedidorBean.medidor.obsIntfComunicacao}"
+						                 rows="8" cols="100" />
 					</p:panel>
 				</p:fieldset>
 
@@ -257,16 +268,19 @@
 					</p:selectOneRadio>
 
 					<p:panel id="obsDispComplementares" visible="#{cadastroMedidorBean.medidor.dispositivosComplementares}">
-						<p:inputTextarea value="#{cadastroMedidorBean.medidor.obsDispComplementares}" />
+						<p:inputTextarea value="#{cadastroMedidorBean.medidor.obsDispComplementares}" 
+						                 rows="8" cols="100"/>
 					</p:panel>
 				</p:fieldset>
 
 				<p:fieldset legend="#{msg['labels.medidor.descricaoGeral']}">
-					<p:inputTextarea value="#{cadastroMedidorBean.medidor.obsDescricaoGeral}" />
+					<p:inputTextarea value="#{cadastroMedidorBean.medidor.obsDescricaoGeral}" 
+					                 rows="8" cols="100"/>
 				</p:fieldset>
 
 				<p:fieldset legend="#{msg['labels.medidor.informacoesAdicionais']}">
-					<p:inputTextarea value="#{cadastroMedidorBean.medidor.obsInfAdicionais}" />
+					<p:inputTextarea value="#{cadastroMedidorBean.medidor.obsInfAdicionais}" 
+					                 rows="8" cols="100"/>
 				</p:fieldset>
 
 				<p:fieldset legend="#{msg['labels.medidor.foto']}">

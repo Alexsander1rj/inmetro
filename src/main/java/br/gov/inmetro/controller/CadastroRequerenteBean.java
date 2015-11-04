@@ -1,6 +1,5 @@
 package br.gov.inmetro.controller;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,23 +18,15 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
 
 import br.gov.inmetro.model.Cidade;
 import br.gov.inmetro.model.Estado;
 import br.gov.inmetro.model.Requerente;
-import br.gov.inmetro.relatorio.RelatorioUtil;
 import br.gov.inmetro.repository.CidadeRepository;
 import br.gov.inmetro.repository.EstadoRepository;
 import br.gov.inmetro.repository.RequerenteRepository;
 import br.gov.inmetro.service.CadastroRequerente;
 import br.gov.inmetro.util.RelatorioWeb;
-import net.sf.jasperreports.engine.JRExporterParameter;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.export.JRPdfExporter;
 
 @Named(value="cadastroRequerenteBean")
 @ViewScoped
@@ -125,17 +116,22 @@ public class CadastroRequerenteBean implements Serializable {
 		ServletContext scontext = (ServletContext) context.getExternalContext().getContext();
 		String sourceFileName = scontext.getRealPath("/WEB-INF/classes/br/gov/inmetro/jasper/requerentes.jasper");
 
-		if (todosRequerentes.iterator().hasNext())
-			listaRequerentes.add(todosRequerentes.iterator().next());
+		for(Requerente requerente : todosRequerentes)
+			listaRequerentes.add(requerente);
 
 		context.responseComplete();
 
 		HashMap<String, Object> parameters = new HashMap<String, Object>();
-
+		
+		parameters.put("LOGO_REPORT", scontext.getRealPath("/figura/inmetro_rel.jpg"));
 
 		RelatorioWeb relatorio = new RelatorioWeb(context, sourceFileName, parameters, listaRequerentes);
 		
 		relatorio.exportaArquivo();
+		
+		System.out.println(scontext.getContextPath());
+		System.out.println(scontext.getRealPath("/figura/"));
+		System.out.println(scontext.getServletContextName());
 	}
 
 	public Requerente getRequerente() {

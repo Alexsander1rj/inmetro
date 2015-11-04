@@ -9,3 +9,8 @@
 .ui-layout-center{
 	padding: 0px
 }
+
+.painel-observacao {
+	margin: 5px !important;
+	padding: 0.5px !important
+}

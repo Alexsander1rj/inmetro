@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.1.1  -->
-<!-- 2015-10-29T15:54:47 -->
+<!-- 2015-11-04T18:47:31 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="requerentes" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="70949a52-cd11-4ad2-b1bd-a6f389a00d5b">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="392"/>
 	<property name="ireport.y" value="0"/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
-	<queryString language="HQL">
-		<![CDATA[select from Requerente]]>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="LOGO_REPORT" class="java.lang.String" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[select * from Requerente]]>
 	</queryString>
 	<field name="razaoNome" class="java.lang.String">
 		<fieldDescription><![CDATA[razaoNome]]></fieldDescription>
@@ -29,77 +31,96 @@
 		<band splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="39" splitType="Stretch">
+		<band height="73" splitType="Stretch">
 			<staticText>
-				<reportElement x="263" y="2" width="276" height="35" uuid="adbd3a6b-1859-4a84-8a88-4f2931660a05"/>
+				<reportElement x="263" y="42" width="276" height="28" uuid="adbd3a6b-1859-4a84-8a88-4f2931660a05"/>
 				<textElement textAlignment="Center">
 					<font size="22" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Relatório de Requerentes]]></text>
 			</staticText>
 			<textField pattern="HH:mm">
-				<reportElement x="702" y="22" width="100" height="14" uuid="6ee3a9eb-3348-435f-b8f3-9182a36deb88"/>
+				<reportElement x="702" y="59" width="100" height="14" uuid="6ee3a9eb-3348-435f-b8f3-9182a36deb88"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
-			<textField pattern="d/M/yyyy">
-				<reportElement x="702" y="8" width="100" height="14" uuid="bcb50a8a-046e-417e-bb30-bbf8135ecb7a"/>
+			<textField pattern="MMMM d, yyyy">
+				<reportElement x="702" y="45" width="100" height="14" uuid="bcb50a8a-046e-417e-bb30-bbf8135ecb7a"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="36" width="802" height="1" uuid="90618caa-55a9-4db8-871e-ca27f2e2097b"/>
+				<reportElement x="0" y="72" width="802" height="1" uuid="90618caa-55a9-4db8-871e-ca27f2e2097b"/>
 			</line>
+			<image>
+				<reportElement x="1" y="21" width="50" height="50" uuid="002e2fd8-0759-4394-8440-2f6f84ab1cfd"/>
+				<imageExpression><![CDATA[$P{LOGO_REPORT}]]></imageExpression>
+			</image>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="52" splitType="Stretch">
+		<band height="17" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
-			<staticText>
-				<reportElement x="118" y="0" width="202" height="13" uuid="a7b6d0aa-586d-40c2-a319-72c12c164f9f"/>
-				<text><![CDATA[CNPJ]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="320" y="0" width="200" height="13" uuid="4eb3adff-32fd-4fcd-bd57-4c8674a68204"/>
-				<text><![CDATA[Telefone]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="560" y="0" width="200" height="13" uuid="73cc3c3c-ce92-4aa8-98a1-a7a65b0911c6"/>
-				<text><![CDATA[Email]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="0" width="118" height="13" uuid="19798460-b7d3-43f8-8a44-7674bf7df5db"/>
-				<text><![CDATA[Nome]]></text>
-			</staticText>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="802" height="17" backcolor="#6E6B6B" uuid="3d4719dc-51aa-4b96-9a79-c58728d5728f"/>
+				<staticText>
+					<reportElement x="-1" y="-2" width="202" height="17" forecolor="#FFFFFF" uuid="19798460-b7d3-43f8-8a44-7674bf7df5db"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nome]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="602" y="0" width="200" height="17" forecolor="#FFFAFA" uuid="73cc3c3c-ce92-4aa8-98a1-a7a65b0911c6"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Email]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="201" y="0" width="200" height="17" forecolor="#FFFFFF" uuid="a7b6d0aa-586d-40c2-a319-72c12c164f9f"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[CNPJ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="401" y="0" width="200" height="17" forecolor="#FFFFFF" uuid="4eb3adff-32fd-4fcd-bd57-4c8674a68204"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Telefone]]></text>
+				</staticText>
+			</frame>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="18" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="2" width="202" height="15" uuid="ea46765c-afca-4ea8-981e-c5f818e0df7a"/>
+				<reportElement x="0" y="0" width="202" height="15" uuid="ea46765c-afca-4ea8-981e-c5f818e0df7a"/>
 				<textFieldExpression><![CDATA[$F{razaoNome}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="402" y="2" width="200" height="15" uuid="5b33b323-41e7-4385-946c-c88862049ef6"/>
+				<reportElement x="402" y="-1" width="200" height="15" uuid="5b33b323-41e7-4385-946c-c88862049ef6"/>
 				<textFieldExpression><![CDATA[$F{tel}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="602" y="2" width="200" height="15" uuid="20aed20c-9bbf-4cef-a626-15af1c9eb6d7"/>
+				<reportElement x="602" y="-1" width="200" height="15" uuid="20aed20c-9bbf-4cef-a626-15af1c9eb6d7"/>
 				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="202" y="2" width="200" height="15" uuid="6e3d0556-3700-4636-ae16-39fa0220f75f"/>
+				<reportElement x="202" y="0" width="200" height="15" uuid="6e3d0556-3700-4636-ae16-39fa0220f75f"/>
 				<textFieldExpression><![CDATA[$F{CNPJ}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="48" splitType="Stretch">
+		<band height="14" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 			<line>
-				<reportElement x="0" y="0" width="802" height="1" uuid="7e8abffa-4dd2-41c3-9037-ea85ed8e68cc"/>
+				<reportElement x="0" y="-1" width="802" height="1" uuid="7e8abffa-4dd2-41c3-9037-ea85ed8e68cc"/>
 			</line>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</summary>
 </jasperReport>
