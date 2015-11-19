@@ -17,7 +17,7 @@
 				<p:inputText value="#{cadastroRequerenteBean.requerente.razaoNome}" required="true"/>
 
 				<p:outputLabel value="#{msg['labels.requerente.cnpj']}" />
-				<p:inputMask mask="99.999.999/9999-99" size="18" value="#{cadastroRequerenteBean.requerente.CNPJ}" />
+				<p:inputMask mask="99.999.999/9999-99" size="20" value="#{cadastroRequerenteBean.requerente.CNPJ}" />
 
 				<p:outputLabel value="#{msg['labels.requerente.endereco']}" />
 				<p:inputText value="#{cadastroRequerenteBean.requerente.endereco}" />
@@ -26,7 +26,7 @@
 				<p:inputText value="#{cadastroRequerenteBean.requerente.bairroDistrito}" />
 
 				<p:outputLabel value="#{msg['labels.requerente.uf']}" />
-				<p:selectOneMenu value="#{cadastroRequerenteBean.requerente.estado}" required="true" >
+				<p:selectOneMenu value="#{cadastroRequerenteBean.requerente.estado}" required="true" style="width:210px" >
 					<p:ajax listener="#{cadastroRequerenteBean.naMudancaEstado()}" update="cidade" />
 					<f:selectItem itemLabel="Selecione" 
 					              itemValue="" 
@@ -38,7 +38,7 @@
 				</p:selectOneMenu>
 
 				<p:outputLabel value="#{msg['labels.requerente.municipio']}" />
-				<p:selectOneMenu id="cidade" value="#{cadastroRequerenteBean.requerente.cidade}" required="true">
+				<p:selectOneMenu id="cidade" value="#{cadastroRequerenteBean.requerente.cidade}" required="true" style="width:210px" >
 					<f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
 					<f:selectItems value="#{cadastroRequerenteBean.cidadesPorEstado}"
 						           var="cidade" 

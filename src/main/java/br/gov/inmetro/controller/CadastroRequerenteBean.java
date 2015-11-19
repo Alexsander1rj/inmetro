@@ -1,6 +1,9 @@
 package br.gov.inmetro.controller;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -15,9 +18,13 @@ import javax.faces.event.ActionEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.view.ViewScoped;
+import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletContext;
+
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 
 import br.gov.inmetro.model.Cidade;
 import br.gov.inmetro.model.Estado;
@@ -38,6 +45,7 @@ public class CadastroRequerenteBean implements Serializable {
 	private List<Estado> todosEstados;
 	private List<Cidade> cidadesPorEstado;
 	private Estado estado;
+	private User usuario;
 
 	@Inject
 	private RequerenteRepository requerentes;
@@ -53,6 +61,9 @@ public class CadastroRequerenteBean implements Serializable {
 	
 	@PostConstruct
 	public void carregaLista() {
+		if(usuario == null)
+			usuario = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
 		estado = null;
 		
 		todosRequerentes = new ListDataModel<Requerente>(requerentes.todos());
@@ -114,16 +125,27 @@ public class CadastroRequerenteBean implements Serializable {
 		List<Requerente> listaRequerentes = new ArrayList<Requerente>();
 		FacesContext context = FacesContext.getCurrentInstance();
 		ServletContext scontext = (ServletContext) context.getExternalContext().getContext();
+		
 		String sourceFileName = scontext.getRealPath("/WEB-INF/classes/br/gov/inmetro/jasper/requerentes.jasper");
 
 		for(Requerente requerente : todosRequerentes)
 			listaRequerentes.add(requerente);
 
 		context.responseComplete();
+		
+		File f = new File(scontext.getRealPath("/figura/inmetro_rel.jpg"));  
+        try {
+			BufferedImage logo = ImageIO.read(f);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}          
 
 		HashMap<String, Object> parameters = new HashMap<String, Object>();
 		
-		parameters.put("LOGO_REPORT", scontext.getRealPath("/figura/inmetro_rel.jpg"));
+		InputStream image = this.getClass().getResourceAsStream("inmetro_rel.jpg");
+		
+		parameters.put("LOGO_REPORT", image);
 
 		RelatorioWeb relatorio = new RelatorioWeb(context, sourceFileName, parameters, listaRequerentes);
 		

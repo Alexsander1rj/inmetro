@@ -7,7 +7,11 @@
 
 <h:head></h:head>
 <h:body style="background-image:url('#{request.contextPath}/resources/figura/INMETROfundo1.jpg');">
-	<form action="j_spring_security_check" method="post">
+	<h:form id="loginForm"
+	        action="/inmetro/j_spring_security_check" 
+	        method="post"
+	        prependId="false" 
+	        onclick="document.#{p:component('loginForm')}.action='/inmetro/j_spring_security_check';">
 		<p:growl id="growl" sticky="true" showDetail="true" life="3000" />
 
 		<p:dialog header="Login" 
@@ -31,11 +35,12 @@
 					<p:commandButton value="Login" 
 					                 update="growl"
 					                 onclick="submit()"
-						             oncomplete="handleLoginRequest(xhr, status, args)" />
+						             oncomplete="handleLoginRequest(xhr, status, args)"
+						             ajax="false" />
 				</f:facet>
 			</h:panelGrid>
 		</p:dialog>
-	</form>
+	</h:form>
 
 	<script type="text/javascript">
     function handleLoginRequest(xhr, status, args) {

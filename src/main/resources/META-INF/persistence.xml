@@ -13,6 +13,7 @@
 		<class>br.gov.inmetro.model.Estado</class>
 		<class>br.gov.inmetro.model.Cidade</class>
 		<class>br.gov.inmetro.model.Pais</class>
+		<class>br.gov.inmetro.model.Usuario</class>
 		
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />

@@ -1,12 +1,22 @@
-#imagem{
-	max-height: 100%;
+#imagem img{
+	max-width:200px;
+    max-height:150px;
 	height: auto;
 	width: auto;
+	float: left;
 }
 
-#headerImg{
-	height: 25%;
-	width: 25%;
+#rodape{
+	text-align: center;
+	font-size: 12px;
 }
+
+#saudacao{
+	position: absolute;
+	bottom: 0;
+	right: 0;
+}
+
+
 
 

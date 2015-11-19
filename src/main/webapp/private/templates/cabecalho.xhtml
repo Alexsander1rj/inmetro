@@ -2,14 +2,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<h:outputStylesheet library="css" name="principal.css" />
 </h:head>
 
 <h:body>
 	<div id="imagem">
-		<h:graphicImage id="headerImg"  library="figura" name="INMETROfundo1.jpg" />
+		<h:graphicImage id="headerImg" library="figura" name="INMETROfundo1.jpg" />
+	</div>
+	<div id="saudacao">
+		<p:outputLabel value="#{usuarioBean.saudacao}" />
 	</div>
 </h:body>
 </html>
