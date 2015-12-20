@@ -1,8 +1,8 @@
 package br.gov.inmetro.enumerator;
 
 public enum InterfaceComunicacao {
-	SAIDA_PULSO("50 Hz"),
-	SAIDA_USUARIO("60 Hz"),
+	SAIDA_PULSO("Saída de Pulso"),
+	SAIDA_USUARIO("Saída de Usuário"),
 	RS485("RS485"),
 	RS232("RS232"),
 	OUTRO("Outro");

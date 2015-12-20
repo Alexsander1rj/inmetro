@@ -1,7 +1,5 @@
 package br.gov.inmetro.controller;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -18,7 +16,6 @@ import javax.faces.event.ActionEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.view.ViewScoped;
-import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletContext;
@@ -131,15 +128,7 @@ public class CadastroRequerenteBean implements Serializable {
 		for(Requerente requerente : todosRequerentes)
 			listaRequerentes.add(requerente);
 
-		context.responseComplete();
-		
-		File f = new File(scontext.getRealPath("/figura/inmetro_rel.jpg"));  
-        try {
-			BufferedImage logo = ImageIO.read(f);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}          
+		context.responseComplete();     
 
 		HashMap<String, Object> parameters = new HashMap<String, Object>();
 		

@@ -1,13 +1,15 @@
 package br.gov.inmetro.model;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
@@ -22,6 +24,7 @@ import br.gov.inmetro.enumerator.InterfaceComunicacao;
 import br.gov.inmetro.enumerator.SentidosFluxo;
 import br.gov.inmetro.enumerator.TensaoNominal;
 import br.gov.inmetro.enumerator.TipoAlimEletrica;
+import br.gov.inmetro.enumerator.TipoFases;
 import br.gov.inmetro.enumerator.TipoFrequencia;
 import br.gov.inmetro.enumerator.TipoInstalacao;
 import br.gov.inmetro.enumerator.TipoMedidor;
@@ -29,10 +32,11 @@ import br.gov.inmetro.enumerator.TipoMostrador;
 import br.gov.inmetro.enumerator.TipoRegistrador;
 
 @Entity
-public class Medidor {
-	@Id
-	@GeneratedValue
-	private Long id;
+public class Medidor implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
+	@EmbeddedId
+	private MedidorPK id = new MedidorPK();
 	
 	@ManyToOne
 	@JoinColumn(name="id_requerente")
@@ -48,10 +52,14 @@ public class Medidor {
 	private DefinicaoSolicitacao definicaoSolicitacao;
 	@Enumerated(EnumType.STRING)
 	private ClasseExatidao classeExatidao;
+
+	@ElementCollection
 	@Enumerated(EnumType.STRING)
-	private GrandezaMedida grandezaMedida;
+	private List<GrandezaMedida> grandezaMedida;
 	@Enumerated(EnumType.STRING)
 	private TipoInstalacao tipoInstalacao;
+	@Enumerated(EnumType.STRING)
+	private TipoFases tipoFase;
 	@Enumerated(EnumType.STRING)
 	private ConfiguracaoEletrica configuracaoEletrica;
 	@Enumerated(EnumType.STRING)
@@ -70,8 +78,9 @@ public class Medidor {
 	private TipoRegistrador tipoRegistrador;
 	@Enumerated(EnumType.STRING)
 	private TipoFrequencia tipoFrequencia;
+	@ElementCollection
 	@Enumerated(EnumType.STRING)
-	private InterfaceComunicacao interfaceComunicacao;
+	private List<InterfaceComunicacao> interfaceComunicacao;
 		
 	private boolean medidorMultitensao;
 	private boolean dispositivosComplementares;
@@ -109,14 +118,6 @@ public class Medidor {
 	@Lob
 	@Column(columnDefinition="LONGBLOB")
 	private byte[] foto;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public Requerente getRequerente() {
 		return requerente;
@@ -180,14 +181,6 @@ public class Medidor {
 
 	public void setClasseExatidao(ClasseExatidao classeExatidao) {
 		this.classeExatidao = classeExatidao;
-	}
-
-	public GrandezaMedida getGrandezaMedida() {
-		return grandezaMedida;
-	}
-
-	public void setGrandezaMedida(GrandezaMedida grandezaMedida) {
-		this.grandezaMedida = grandezaMedida;
 	}
 
 	public TipoInstalacao getTipoInstalacao() {
@@ -268,14 +261,6 @@ public class Medidor {
 
 	public void setTipoFrequencia(TipoFrequencia tipoFrequencia) {
 		this.tipoFrequencia = tipoFrequencia;
-	}
-
-	public InterfaceComunicacao getInterfaceComunicacao() {
-		return interfaceComunicacao;
-	}
-
-	public void setInterfaceComunicacao(InterfaceComunicacao interfaceComunicacao) {
-		this.interfaceComunicacao = interfaceComunicacao;
 	}
 
 	public boolean isMedidorMultitensao() {
@@ -494,28 +479,35 @@ public class Medidor {
 		this.foto = foto;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
+	public MedidorPK getId() {
+		return id;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Medidor other = (Medidor) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
+	public void setId(MedidorPK id) {
+		this.id = id;
+	}
+
+	public List<GrandezaMedida> getGrandezaMedida() {
+		return grandezaMedida;
+	}
+
+	public void setGrandezaMedida(List<GrandezaMedida> grandezaMedida) {
+		this.grandezaMedida = grandezaMedida;
+	}
+
+	public List<InterfaceComunicacao> getInterfaceComunicacao() {
+		return interfaceComunicacao;
+	}
+
+	public void setInterfaceComunicacao(List<InterfaceComunicacao> interfaceComunicacao) {
+		this.interfaceComunicacao = interfaceComunicacao;
+	}
+
+	public TipoFases getTipoFase() {
+		return tipoFase;
+	}
+
+	public void setTipoFase(TipoFases tipoFase) {
+		this.tipoFase = tipoFase;
 	}
 }

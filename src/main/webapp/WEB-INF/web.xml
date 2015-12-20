@@ -23,6 +23,7 @@
 		<param-name>primefaces.FONT_AWESOME</param-name>
 		<param-value>true</param-value>
 	</context-param>
+	
 	<!-- Weld CDI -->
 	<listener>
 		<listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>

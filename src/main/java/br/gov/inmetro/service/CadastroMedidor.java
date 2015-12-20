@@ -7,9 +7,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.gov.inmetro.model.Medidor;
-import br.gov.inmetro.model.Requerente;
 import br.gov.inmetro.repository.MedidorRepository;
-import br.gov.inmetro.repository.RequerenteRepository;
 
 @Named
 @ViewScoped

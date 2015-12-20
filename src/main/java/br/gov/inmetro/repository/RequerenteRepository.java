@@ -47,7 +47,7 @@ public class RequerenteRepository implements Serializable{
 	}
 
 	public List<Requerente> todos() {
-		TypedQuery<Requerente> query = manager.createQuery("from Requerente", Requerente.class);
+		TypedQuery<Requerente> query = manager.createQuery("from Requerente order by razaoNome", Requerente.class);
 		
 		return query.getResultList();
 	}

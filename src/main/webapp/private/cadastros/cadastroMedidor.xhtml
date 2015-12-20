@@ -4,7 +4,9 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
-	template="/private/templates/principal.xhtml">
+	xmlns:o="http://omnifaces.org/ui"
+	template="/private/templates/principal.xhtml"
+                >
 
 	<ui:define name="titulo">#{msg['labels.medidor.cadastroMedidor']}</ui:define>
 	<ui:define name="conteudo">
@@ -14,19 +16,35 @@
 			<p:panel header="#{msg['labels.medidor.cadastroMedidor']}">
 				<h:panelGrid columns="2">
 					<p:outputLabel value="#{msg['labels.medidor.requerente']}" />
-					<p:selectOneMenu value="#{cadastroMedidorBean.medidor.requerente}" required="true">
+					<p:selectOneMenu value="#{cadastroMedidorBean.medidor.requerente}" 
+					                 required="true" 
+					                 label="#{msg['labels.medidor.requerente']}">
 						<f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
 						<f:selectItems value="#{cadastroMedidorBean.todosRequerentes}" 
 						               var="requerente" 
 						               itemValue="#{requerente}" 
 						               itemLabel="#{requerente.razaoNome}" />
 					</p:selectOneMenu>
+					
+					<p:outputLabel value="#{msg['labels.processo.sitad']}" />
+					<p:inputText value="#{cadastroMedidorBean.medidor.id.codSITAD}" 
+					             required="true"
+					             label="#{msg['labels.processo.sitad']}" />
+					
+					<p:outputLabel value="#{msg['labels.medidor.numeroSerie']}" />
+					<p:inputText value="#{cadastroMedidorBean.medidor.id.numeroSerie}" 
+					             required="true"
+					             label="#{msg['labels.medidor.numeroSerie']}" />
 				
 					<p:outputLabel value="#{msg['labels.medidor.fabricante']}" />
-					<p:inputText value="#{cadastroMedidorBean.medidor.fabricante}" required="true" />
+					<p:inputText value="#{cadastroMedidorBean.medidor.fabricante}" 
+					             required="true"
+					             label="#{msg['labels.medidor.fabricante']}" />
 
 					<p:outputLabel value="#{msg['labels.medidor.marca']}" />
-					<p:inputText value="#{cadastroMedidorBean.medidor.marca}" required="true" />
+					<p:inputText value="#{cadastroMedidorBean.medidor.marca}" 
+					             required="true"
+					             label="#{msg['labels.medidor.marca']}" />
 
 					<p:outputLabel value="#{msg['labels.medidor.paisOrigem']}" />
 					<p:selectOneMenu value="#{cadastroMedidorBean.medidor.pais}" required="true">
@@ -72,26 +90,43 @@
 				</p:fieldset>
 
 				<p:fieldset legend="#{msg['labels.medidor.grandezaMedida']}">
-					<p:selectOneRadio value="#{cadastroMedidorBean.medidor.grandezaMedida}">
-						<f:selectItems value="#{cadastroMedidorBean.grandezaMedida}"
-							           var="grandeza" 
-							           itemValue="#{grandeza}" 
-							           itemLabel="#{grandeza.descricao}" />
-					</p:selectOneRadio>
+				<p:selectManyCheckbox value="#{cadastroMedidorBean.medidor.grandezaMedida}"
+				                      converter="omnifaces.GenericEnumConverter">
+				<p:ajax update="constCalibracaoWh constCalibracaoVarh constEletronicaWh constEletronicaVarh"/>
+				<f:selectItems value="#{cadastroMedidorBean.grandezaMedida}"
+							   var="grandeza" 
+							   itemValue="#{grandeza}" 
+							   itemLabel="#{grandeza.descricao}" />
+				</p:selectManyCheckbox>
 
 				</p:fieldset>
 
 				<p:fieldset legend="#{msg['labels.medidor.constanteCalibracao']}">
-					<p:inputText value="#{cadastroMedidorBean.medidor.constCalibracaoWh}"/>
+				<o:importConstants type="br.gov.inmetro.enumerator.GrandezaMedida" />
+					<p:inputText value="#{cadastroMedidorBean.medidor.constCalibracaoWh}" id="constCalibracaoWh" 
+					             disabled="#{!cadastroMedidorBean.medidor.grandezaMedida.contains(GrandezaMedida.ENERGIA_ATIVA)}">
+					<f:convertNumber minIntegerDigits="1"   
+					                 maxIntegerDigits="2"
+					                 minFractionDigits="1" 
+					                 maxFractionDigits="3"
+					                 pattern="#,##0.00"
+					                 locale="US"/>
+					</p:inputText>					
 					<p:outputLabel value="#{msg['labels.medidor.wh']}"/>
-					<p:inputText value="#{cadastroMedidorBean.medidor.constCalibracaovarh}"/>
+					
+					<p:inputText value="#{cadastroMedidorBean.medidor.constCalibracaovarh}" id="constCalibracaoVarh"
+					             disabled="#{!cadastroMedidorBean.medidor.grandezaMedida.contains(GrandezaMedida.ENERGIA_REATIVA)}"/>
 					<p:outputLabel value="#{msg['labels.medidor.varh']}"/>
+					
+					<p:outputLabel id="atualiza">#{cadastroMedidorBean.medidor.grandezaMedida}  #{cadastroMedidorBean.medidor.grandezaMedida.contains(GrandezaMedida.ENERGIA_ATIVA)}</p:outputLabel>
 				</p:fieldset>
 
 				<p:fieldset legend="#{msg['labels.medidor.constanteEletronica']}">
-					<p:inputText value="#{cadastroMedidorBean.medidor.constEletronicaWh}" />
+					<p:inputText value="#{cadastroMedidorBean.medidor.constEletronicaWh}" id="constEletronicaWh"
+					             disabled="#{!cadastroMedidorBean.medidor.grandezaMedida.contains(GrandezaMedida.ENERGIA_ATIVA)}" />
 					<p:outputLabel value="#{msg['labels.medidor.wh']}" />
-					<p:inputText value="#{cadastroMedidorBean.medidor.constEletronicavarh}" />
+					<p:inputText value="#{cadastroMedidorBean.medidor.constEletronicavarh}" id="constEletronicaVarh"
+					             disabled="#{!cadastroMedidorBean.medidor.grandezaMedida.contains(GrandezaMedida.ENERGIA_REATIVA)}"/>
 					<p:outputLabel value="#{msg['labels.medidor.varh']}" />
 				</p:fieldset>
 				
@@ -111,8 +146,18 @@
 					</p:panel>
 
 				</p:fieldset>
+				
+				<!-- Configuração Elétrica -->
 
 				<p:fieldset legend="#{msg['labels.medidor.configEletrica']}">
+					<p:selectOneRadio value="#{cadastroMedidorBean.medidor.tipoFase}">
+						<p:ajax listener="#{cadastroMedidorBean.verificaObsConfigEletrica()}" update="obsConfigEletrica" />
+						<f:selectItems value="#{cadastroMedidorBean.tipoFases}"
+							           var="fase"
+							           itemValue="#{fase}"
+							           itemLabel="#{fase.descricao}" />
+					</p:selectOneRadio>
+				
 					<p:selectOneRadio value="#{cadastroMedidorBean.medidor.configuracaoEletrica}">
 						<p:ajax listener="#{cadastroMedidorBean.verificaObsConfigEletrica()}" update="obsConfigEletrica" />
 						<f:selectItems value="#{cadastroMedidorBean.configuracaoEletrica}"
@@ -223,16 +268,15 @@
 
 					<p:inputTextarea value="#{cadastroMedidorBean.medidor.obsTipoMosrador}" 
 					                 rows="8" cols="100"/>
-					
-					<p:fieldset legend="#{msg['labels.medidor.registrador']}">
-					<p:selectOneRadio value="#{cadastroMedidorBean.medidor.tipoRegistrador}">
-					<f:selectItems value="#{cadastroMedidorBean.tipoRegistrador}"
-					               var="registrador"
-					               itemValue="#{registrador}"
-					               itemLabel="#{registrador.descricao}"/>
-					</p:selectOneRadio>					
-					</p:fieldset>
+				</p:fieldset>
 
+				<p:fieldset legend="#{msg['labels.medidor.registrador']}">
+					<p:selectOneRadio value="#{cadastroMedidorBean.medidor.tipoRegistrador}">
+						<f:selectItems value="#{cadastroMedidorBean.tipoRegistrador}"
+							           var="registrador" 
+							           itemValue="#{registrador}"
+							           itemLabel="#{registrador.descricao}" />
+					</p:selectOneRadio>
 				</p:fieldset>
 
 				<p:fieldset legend="#{msg['labels.medidor.frequencia']}">
@@ -244,22 +288,30 @@
 					</p:selectOneRadio>
 				</p:fieldset>
 
+		<!-- Interface de Comunicação -->
 				<p:fieldset legend="#{msg['labels.medidor.interfaceComunicacao']}">
-					<p:selectOneRadio value="#{cadastroMedidorBean.medidor.interfaceComunicacao}">
-						<p:ajax listener="#{cadastroMedidorBean.verificaObsInterface()}"
-						        update="obsInterface" />
+					<p:selectManyCheckbox value="#{cadastroMedidorBean.medidor.interfaceComunicacao}"
+						                  converter="omnifaces.GenericEnumConverter">
+						<p:ajax listener="#{cadastroMedidorBean.verificaObsInterface()}" update="obsInterface teste"/>
 						<f:selectItems value="#{cadastroMedidorBean.interfaceComunicacao}"
 							           var="interfaceComunicacao" 
 							           itemValue="#{interfaceComunicacao}"
 							           itemLabel="#{interfaceComunicacao.descricao}" />
-					</p:selectOneRadio>
+					</p:selectManyCheckbox>
 
 					<p:panel id="obsInterface" visible="#{cadastroMedidorBean.exibeObsInterfaceCom}">
 						<p:inputTextarea value="#{cadastroMedidorBean.medidor.obsIntfComunicacao}"
-						                 rows="8" cols="100" />
+							             rows="8" cols="100" />
 					</p:panel>
+					<o:importConstants type="br.gov.inmetro.enumerator.InterfaceComunicacao" />
+<!-- 											<p:inputTextarea 
+							value="#{cadastroMedidorBean.medidor.obsIntfComunicacao}"
+							rows="8" cols="100" rendered="#{cadastroMedidorBean.medidor.interfaceComunicacao.contains(InterfaceComunicacao.OUTRO)}" id="obsInterface"/> -->
+							<p:outputLabel id="teste" >#{cadastroMedidorBean.medidor.interfaceComunicacao.contains(InterfaceComunicacao.OUTRO)} #{cadastroMedidorBean.medidor.interfaceComunicacao} "#{InterfaceComunicacao.OUTRO}"</p:outputLabel>
 				</p:fieldset>
 
+				<!-- Dispositivos Complementares -->
+				
 				<p:fieldset legend="#{msg['labels.medidor.dispositivosComplementares']}">
 					<p:selectOneRadio value="#{cadastroMedidorBean.medidor.dispositivosComplementares}">
 					<p:ajax update="obsDispComplementares"/>

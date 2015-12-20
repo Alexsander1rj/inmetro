@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -16,6 +17,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.context.RequestContext;
 import org.primefaces.model.UploadedFile;
 
 import br.gov.inmetro.enumerator.ClasseExatidao;
@@ -28,6 +30,7 @@ import br.gov.inmetro.enumerator.InterfaceComunicacao;
 import br.gov.inmetro.enumerator.SentidosFluxo;
 import br.gov.inmetro.enumerator.TensaoNominal;
 import br.gov.inmetro.enumerator.TipoAlimEletrica;
+import br.gov.inmetro.enumerator.TipoFases;
 import br.gov.inmetro.enumerator.TipoFrequencia;
 import br.gov.inmetro.enumerator.TipoInstalacao;
 import br.gov.inmetro.enumerator.TipoMostrador;
@@ -59,7 +62,6 @@ public class CadastroMedidorBean implements Serializable {
 	private boolean exibeObsCorrenteNominal;
 	private boolean exibeObsCorrenteMaxima;
 	private boolean exibeObsInterfaceCom;
-	private boolean exibeObsDispComplementares;
 	
 	@Inject
 	private MedidorRepository medidores;
@@ -90,9 +92,14 @@ public class CadastroMedidorBean implements Serializable {
 
 		FacesContext context = FacesContext.getCurrentInstance();
 
-		context.addMessage(null, new FacesMessage("TESTE, TESTE"));
+		context.addMessage(null, new FacesMessage(
+				ResourceBundle.getBundle("messages_labels").getString("labels.medidor") + " " + 
+				        medidor.getModelo() + " " + 
+					    ResourceBundle.getBundle("messages_labels").getString("labels.msg.AddSucesso") ) );
 
 		medidor = new Medidor();
+		
+		context.getExternalContext().getFlash().setKeepMessages(true);
 
 		try {
 			FacesContext.getCurrentInstance().getExternalContext()
@@ -107,7 +114,10 @@ public class CadastroMedidorBean implements Serializable {
 
 		FacesContext context = FacesContext.getCurrentInstance();
 
-		context.addMessage(null, new FacesMessage("Medidor " + medidor.getModelo() + " exclu�do com sucesso!"));
+		context.addMessage(null, new FacesMessage(
+				ResourceBundle.getBundle("messages_labels").getString("labels.medidor") + " " + 
+		        medidor.getModelo() + " " + 
+			    ResourceBundle.getBundle("messages_labels").getString("labels.msg.ExclusaoSucesso") ) );
 
 		medidor = new Medidor();
 	}
@@ -209,6 +219,10 @@ public class CadastroMedidorBean implements Serializable {
 	public InterfaceComunicacao[] getInterfaceComunicacao(){
 		return InterfaceComunicacao.values();
 	}
+	
+	public TipoFases[] getTipoFases(){
+		return TipoFases.values();
+	}
 
 	public void verificaObsDefSolicitacao() {
 		setExibeObsDefSolicitacao(medidor.getDefinicaoSolicitacao().equals(DefinicaoSolicitacao.MODIFICACAO));
@@ -235,7 +249,12 @@ public class CadastroMedidorBean implements Serializable {
 	}	
 	
 	public void verificaObsInterface() {
-		setExibeObsInterfaceCom(medidor.getInterfaceComunicacao().equals(InterfaceComunicacao.OUTRO));
+		boolean interfaceOutro = medidor.getInterfaceComunicacao().contains(InterfaceComunicacao.OUTRO);
+		
+		if(interfaceOutro)
+			RequestContext.getCurrentInstance().update("form:obsInterface");
+
+		setExibeObsInterfaceCom(interfaceOutro);
 	}
 
 	public boolean isExibeObsDefSolicitacao() {
@@ -301,12 +320,4 @@ public class CadastroMedidorBean implements Serializable {
 	public void setExibeObsInterfaceCom(boolean exibeObsInterfaceCom) {
 		this.exibeObsInterfaceCom = exibeObsInterfaceCom;
 	}
-
-	public boolean isExibeObsDispComplementares() {
-		return medidor.isDispositivosComplementares();
-	}
-
-	public void setExibeObsDispComplementares(boolean exibeObsDispositivosComplementares) {
-		this.exibeObsDispComplementares = exibeObsDispositivosComplementares;
-	}	
 }
