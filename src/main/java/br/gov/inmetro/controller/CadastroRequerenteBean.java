@@ -10,12 +10,12 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletContext;
@@ -33,7 +33,7 @@ import br.gov.inmetro.service.CadastroRequerente;
 import br.gov.inmetro.util.RelatorioWeb;
 
 @Named(value="cadastroRequerenteBean")
-@ViewScoped
+@ApplicationScoped
 public class CadastroRequerenteBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 

@@ -1,9 +1,9 @@
 package br.gov.inmetro.enumerator;
 
 public enum TipoRegistrador {
-	UNIDIRECIONAL("UNIDIRECIONAL"),
-	BIDIRECIONAL("BIDIRECIONAL"),
-	COM_CATRACA("COM CATRACA");
+	UNIDIRECIONAL("Unidirecional"),
+	BIDIRECIONAL("Bidirecional"),
+	COM_CATRACA("Com catraca");
 
 	private String descricao;
 

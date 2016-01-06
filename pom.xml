@@ -133,6 +133,7 @@
 			<version>2.2.9.Final</version>
 			<scope>compile</scope>
 		</dependency>
+		
 		<!-- Weld depende do Jandex -->
 		<dependency>
 			<groupId>org.jboss</groupId>

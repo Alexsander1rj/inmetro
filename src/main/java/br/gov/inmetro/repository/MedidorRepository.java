@@ -3,7 +3,7 @@ package br.gov.inmetro.repository;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.faces.view.ViewScoped;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -11,9 +11,10 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
 import br.gov.inmetro.model.Medidor;
+import br.gov.inmetro.model.MedidorPK;
 
 @Named
-@ViewScoped
+@ApplicationScoped
 public class MedidorRepository implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
@@ -42,7 +43,7 @@ public class MedidorRepository implements Serializable{
 		trx.commit();
 	}	
 
-	public Medidor porId(Long id) {
+	public Medidor porId(MedidorPK id) {
 		return manager.find(Medidor.class, id);
 	}
 

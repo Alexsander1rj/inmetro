@@ -13,6 +13,13 @@ public class MedidorPK implements Serializable{
 	
 	public MedidorPK() {
 	}
+	
+	public MedidorPK(String pk) {
+		String[] idComposto = pk.split(":");
+		
+		setCodSITAD(idComposto[0]);
+		setNumeroSerie(new Integer(idComposto[1]));		
+	}
 
 	public String getCodSITAD() {
 		return codSITAD;
@@ -61,5 +68,11 @@ public class MedidorPK implements Serializable{
 			return false;
 		
 		return true;
+	}
+	
+	@Override
+	public String toString() {		
+				
+		return codSITAD + ":" + numeroSerie;
 	}
 }

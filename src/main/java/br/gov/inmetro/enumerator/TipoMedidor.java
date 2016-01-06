@@ -1,8 +1,8 @@
 package br.gov.inmetro.enumerator;
 
 public enum TipoMedidor {
-	ELETROMECANICO("Eletromecânico"),
-	ELETONICO("Eletrônico"),
+	DIRETA("Eletromecânico"),
+	INDIRETA("Eletrônico"),
 	MULTIPLATARIFACAO("Múltipla Tarifação");
 
 	private String descricao;

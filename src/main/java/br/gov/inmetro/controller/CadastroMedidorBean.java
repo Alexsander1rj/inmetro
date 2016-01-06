@@ -1,6 +1,9 @@
 package br.gov.inmetro.controller;
 
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
@@ -11,13 +14,18 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.PhaseId;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletContext;
 
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 import br.gov.inmetro.enumerator.ClasseExatidao;
@@ -36,6 +44,7 @@ import br.gov.inmetro.enumerator.TipoInstalacao;
 import br.gov.inmetro.enumerator.TipoMostrador;
 import br.gov.inmetro.enumerator.TipoRegistrador;
 import br.gov.inmetro.model.Medidor;
+import br.gov.inmetro.model.MedidorPK;
 import br.gov.inmetro.model.Pais;
 import br.gov.inmetro.model.Requerente;
 import br.gov.inmetro.repository.MedidorRepository;
@@ -84,9 +93,7 @@ public class CadastroMedidorBean implements Serializable {
 	public void salvar(ActionEvent actionEvent) {
 		Date dtHoje = Calendar.getInstance().getTime();
 
-		medidor.setDataInclusao(dtHoje);
-		
-		medidor.setFoto(uploadFile.getContents());
+		medidor.setDataInclusao(dtHoje);		
 
 		cadastro.salvar(medidor);
 
@@ -108,6 +115,12 @@ public class CadastroMedidorBean implements Serializable {
 			e.printStackTrace();
 		}
 	}
+	
+	public void uploadImagem(FileUploadEvent evento){
+		uploadFile = evento.getFile();
+		
+		medidor.setFoto(uploadFile.getContents());
+	}
 
 	public void excluir(ActionEvent actionEvent) {
 		cadastro.excluir(medidor);
@@ -120,6 +133,44 @@ public class CadastroMedidorBean implements Serializable {
 			    ResourceBundle.getBundle("messages_labels").getString("labels.msg.ExclusaoSucesso") ) );
 
 		medidor = new Medidor();
+	}
+	
+	public StreamedContent getImagem() throws IOException {
+        FacesContext context = FacesContext.getCurrentInstance();        
+        
+        ServletContext scontext = (ServletContext) context.getExternalContext().getContext();
+        
+		String sourceFileName = scontext.getRealPath("/resources/figura/sem-foto.jpg");
+        
+        byte[] imagem;
+        
+        if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
+            // So, we're rendering the HTML. Return a stub StreamedContent so that it will generate right URL.
+            return new DefaultStreamedContent();
+        }
+        else {
+            // So, browser is requesting the image. Return a real StreamedContent with the image bytes.
+            String medidorId = context.getExternalContext().getRequestParameterMap().get("medidorId");
+            
+            Medidor medidor = medidores.porId(new MedidorPK(medidorId));
+            
+			if (medidor.getFoto() == null)
+				imagem = imagemToByte(sourceFileName);
+			else
+				imagem = medidor.getFoto();					
+            		
+            return new DefaultStreamedContent(new ByteArrayInputStream(imagem));
+        }
+    }
+	
+	public byte[] imagemToByte(String image) throws IOException {
+	    InputStream is = null;
+	    byte[] buffer = null;
+	    is = new FileInputStream(image);
+	    buffer = new byte[is.available()];
+	    is.read(buffer);
+	    is.close();
+	    return buffer;
 	}
 
 	public Medidor getMedidor() {

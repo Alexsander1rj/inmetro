@@ -56,10 +56,9 @@
 					<p:graphicImage library="figura" name="editar.jpg" width="20" height="20" />
 
 					<p:commandLink value="#{msg['labels.msg.editar']}"
-						action="cadastroRequerente">
-						<f:setPropertyActionListener
-							target="#{cadastroRequerenteBean.requerente}"
-							value="#{requerente}" />
+						           action="cadastroRequerente">
+						<f:setPropertyActionListener target="#{cadastroRequerenteBean.requerente}"
+							                         value="#{requerente}" />
 					</p:commandLink>
 
 				</p:column>

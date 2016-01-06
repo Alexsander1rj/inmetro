@@ -25,6 +25,14 @@
 				         rowsPerPageTemplate="5,10,15"
 				         paginatorPosition="bottom">
 
+				<p:column width="60">
+					<p:graphicImage value="#{cadastroMedidorBean.imagem}"
+					                width="100"
+					                height="100">
+						<f:param name="medidorId" value="#{medidor.id}" />
+					</p:graphicImage>
+				</p:column>
+
 				<p:column sortBy="#{medidor.fabricante}" width="200">
 					<f:facet name="header">
 						<h:outputText value="#{msg['labels.medidor.fabricante']}" />
@@ -42,16 +50,17 @@
 				<p:column width="50">
 					<p:graphicImage library="figura" name="editar.jpg" width="20" height="20" />
 
-					<p:commandLink value="#{msg['labels.msg.editar']}" />
+					<p:commandLink value="#{msg['labels.msg.editar']}" action="alteraMedidor">
+						<f:setPropertyActionListener
+							target="#{cadastroMedidorBean.medidor}" value="#{medidor}" />
+					</p:commandLink>
 				</p:column>
 
 				<p:column width="50">
 					<p:graphicImage library="figura" name="excluir.png" width="20" height="20" />
 
-					<p:commandLink value="#{msg['labels.msg.excluir']}"
-						onclick="PF('cd').show()">
-						<f:setPropertyActionListener target="#{cadastroMedidorBean.medidor}"
-							value="#{medidor}" />
+					<p:commandLink value="#{msg['labels.msg.excluir']}" onclick="PF('cd').show()">
+						<f:setPropertyActionListener target="#{cadastroMedidorBean.medidor}" value="#{medidor}" />
 					</p:commandLink>
 
 				</p:column>
